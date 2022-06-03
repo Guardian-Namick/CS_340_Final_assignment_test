@@ -1,0 +1,96 @@
+<!-- index.hbs -->
+<h1>Repository of the void: Database for Wrath of the Void</h1>
+[ <a href="./pets">Pets</a> | <a href="./characters">Characters</a> | <a href="./weapons">Weapons</a> | <a href="./armors">Armors</a> | <a href="./improvements">Improvements</a> | <a href="./character_armor">Character's Armor</a> | <a href="./character_weapon">Character's Weapon</a>]</html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{!-- Create a table --}}
+<table id="weapon-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>delete</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr data-value={{this.weapon_id}}>>
+            <td>{{this.weapon_id}}</td>
+            <td>{{this.improvement_id}}</td>
+            <td>{{this.weapon_name}}</td>
+            <td>{{this.weapon_damage}}</td>
+            <td>{{this.weapon_weight}}</td>
+            <td>{{this.speed_change}}</td>
+            <td><button onclick="deleteWeapon({{this.weapon_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_weapon.js"></script>
+
+{{!-- Form to add a record to the table  --}}
+<h2>Add Weapon</h2>
+<p>To add a new Weapon, please enter their information below and click 'Submit'!</p>
+<form id="add-weapon-form-ajax">
+    <label for="input-weapon_name">Weapon Name: </label>
+    <input type="text" name="input-weapon_name" id="input-weapon_name">
+
+    <label for="input-improvement_id">Improvement ID: </label>
+    <select name="input-chracter_id" id="mySelect">
+        <option value="test">Select an Improvement</option>
+        {{#each data}}
+        <option value="{{this.improvement_id}}">{{this.improvement_id}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-weapon_damage">Weapon Damage: </label>
+    <input type="text" name="input-weapon_damage" id="input-weapon_damage">
+
+    <label for="input-weapon_weight">Weapon Weight: </label>
+    <input type="text" name="input-weapon_weight" id="input-weapon_weight">
+
+    <label for="input-speed_change">Speed Change: </label>
+    <input type="text" name="input-speed_change" id="input-speed_change">
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_weapon.js"></script>
+
+<h2>Updating A Weapons's Stats</h2>
+<p>To update a specific weapons's stats select their name from the drop-down menu on the left and change their stats accordingly</p>
+<form id="update-weapon-form-ajax">
+
+    <label for="input-weapon_name">Weapon Name: </label>
+    <select name="input-weapon_name" id="mySelectWeapon">
+        <option value="test">Select a Weapon</option>
+        {{#each data}}
+        <option value="{{this.weapon_id}}">{{this.weapon_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-weapon_damage">Weapon Damage: </label>
+    <input type="text" name="input-weapon_damage" id="input-weapon_damage-update">
+
+    <label for="input-weapon_weight">Weapon Weight: </label>
+    <input type="text" name="input-weapon_weight" id="input-weapon_weight-update">
+
+    <label for="input-speed_change">Speed Change: </label>
+    <input type="text" name="input-speed_change" id="input-speed_change-update">
+
+    <input type="submit">
+</form>
+
+<script src="./js/update_weapon.js"></script>

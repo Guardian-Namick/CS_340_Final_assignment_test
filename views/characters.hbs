@@ -1,0 +1,90 @@
+<!-- index.hbs -->
+<h1>Repository of the void: Database for Wrath of the Void</h1>
+[ <a href="./pets">Pets</a> | <a href="./characters">Characters</a> | <a href="./weapons">Weapons</a> | <a href="./armors">Armors</a> | <a href="./improvements">Improvements</a> | <a href="./character_armor">Character's Armor</a> | <a href="./character_weapon">Character's Weapon</a>]</html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{!-- Create a table --}}
+<table id="character-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>delete</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr data-value={{this.character_id}}>>
+            <td>{{this.character_id}}</td>
+            <td>{{this.character_name}}</td>
+            <td>{{this.character_speed}}</td>
+            <td>{{this.creation_age}}</td>
+            <td><button onclick="deleteCharacter({{this.character_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_character.js"></script>
+
+
+<!-- /views/index.hbs -->
+
+<h2>Search</h2>
+<p>Search by character name using the field below. Partial names are OK too!</p>
+<form id="search-character-html" method='GET' action='/'>
+    <label for="input-character_name">Search by Character Name: </label>
+    <input type="text" name="character_name" id="input-character_name-html-search">
+    
+    <input type="submit">
+    <a href='/'><button>Reset</button></a>
+</form>
+
+{{!-- Form to add a record to the table  --}}
+<h2>Add Character</h2>
+<p>To add a new Character, please enter their information below and click 'Submit'!</p>
+<form id="add-character-form-ajax">
+    <label for="input-character_name">Character Name: </label>
+    <input type="text" name="input-character_name" id="input-character_name">
+    
+    <label for="input-character_speed">Character Speed: </label>
+    <input type="text" name="input-character_speed" id="input-character_speed">
+
+    <label for="input-creation_age">Creation Age: </label>
+    <input type="text" name="input-creation_age" id="input-creation_age">
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_character.js"></script>
+
+<h2>Updating A Character's Speed</h2>
+<p>To update a specific character's speed select their name from the drop-down menu on the left and change their speed accordingly</p>
+<form id="update-character-form-ajax">
+
+    <label for="input-character_name">Character Name: </label>
+    <select name="input-chracter_name" id="mySelect">
+        <option value="test">Select a Character</option>
+        {{#each data}}
+        <option value="{{this.character_id}}">{{this.character_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-character_speed">Character Speed: </label>
+    <input type="text" name="input-character_speed" id="input-character_speed-update">
+
+    <input type="submit">
+</form>
+
+<script src="./js/update_character.js"></script>
